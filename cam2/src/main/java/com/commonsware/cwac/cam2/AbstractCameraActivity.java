@@ -158,7 +158,6 @@ abstract public class AbstractCameraActivity extends Activity {
   @TargetApi(23)
   @Override
   protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
 
     Utils.validateEnvironment(this);
 
@@ -193,7 +192,7 @@ abstract public class AbstractCameraActivity extends Activity {
         ab.hide();
       }
     }
-
+    super.onCreate(savedInstanceState);
     if (useRuntimePermissions()) {
       String[] perms=netPermissions(getNeededPermissions());
 

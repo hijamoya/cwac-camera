@@ -251,6 +251,10 @@ public class CameraTwoEngine extends CameraEngine {
                           PictureTransaction xact) {
     final Session s=(Session)session;
 
+    if (s == null || s.reader == null) {
+      return;
+    }
+
     s.reader.setOnImageAvailableListener(new TakePictureTransaction(session.getContext(), getBus(), xact),
         handler);
 
@@ -315,8 +319,8 @@ public class CameraTwoEngine extends CameraEngine {
         cameraDevice.createCaptureSession(
             Arrays.asList(surface, s.reader.getSurface()),
             new StartPreviewTransaction(s, surface), handler);
-      }
-      catch (CameraAccessException e) {
+      } catch(IllegalStateException ignored) {
+      } catch (CameraAccessException e) {
         getBus().post(new OpenedEvent(e));
       }
     }
