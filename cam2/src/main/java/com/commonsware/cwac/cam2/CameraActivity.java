@@ -19,6 +19,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.os.Build;
+import android.os.Bundle;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -183,6 +185,9 @@ public class CameraActivity extends AbstractCameraActivity
   }
 
   private void removeFragments() {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1 && isDestroyed()){
+       return;
+    }
     getFragmentManager()
         .beginTransaction()
         .remove(confirmFrag)

@@ -20,6 +20,10 @@ import android.net.Uri;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import android.widget.Toast; 
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+import rx.util.async.Async;
 
 /**
  * ImageProcessor that writes a JPEG file out to some form
@@ -96,7 +100,11 @@ public class JPEGWriter extends AbstractImageProcessor {
         }
       }
       catch (Exception e) {
-        throw new UnsupportedOperationException("Exception when trying to write JPEG", e);
+          Async.fromRunnable(new Runnable() {
+                 @Override public void run() {               
+          Toast.makeText(getContext(), "圖片寫入失敗!", Toast.LENGTH_LONG).show();
+          }
+        }, null, AndroidSchedulers.mainThread()).subscribe();
       }
     }
   }
